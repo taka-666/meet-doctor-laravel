@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTypeUserTable extends Migration
+class CreatePermissionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateTypeUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('type_user', function (Blueprint $table) {
+        Schema::create('permission', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('title');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -28,6 +28,6 @@ class CreateTypeUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('type_user');
+        Schema::dropIfExists('permission');
     }
 }

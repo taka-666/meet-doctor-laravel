@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTypeUserTable extends Migration
+class CreateConsultationTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateTypeUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('type_user', function (Blueprint $table) {
+        Schema::create('consultation', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
             $table->timestamps();
@@ -28,6 +28,6 @@ class CreateTypeUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('type_user');
+        Schema::dropIfExists('consultation');
     }
 }
