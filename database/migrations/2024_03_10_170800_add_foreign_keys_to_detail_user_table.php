@@ -19,15 +19,13 @@ class AddForeignKeysToDetailUserTable extends Migration
             $table->foreign('user_id', 'fk_detail_user_to_users')
             ->references('id')
             ->on('users')
-            ->onDelete('CASCADE')
-            ->onUpdate('CASCADE');
+            ->onUpdate('CASCADE')->onDelete('CASCADE');
 
             // foreign key type_user_id
             $table->foreign('type_user_id', 'fk_detail_user_to_type_user')
             ->references('id')
             ->on('type_user')
-            ->onDelete('CASCADE')
-            ->onUpdate('CASCADE');
+            ->onUpdate('CASCADE')->onDelete('CASCADE');
         });
     }
 
