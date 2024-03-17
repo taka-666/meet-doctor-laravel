@@ -26,4 +26,12 @@ class TypeUser extends Model
         'updated_at',
         'deleted_at',
     ];
+
+    // one to manyy
+    // function detail user to type user memiliki relasi detail_user(many) -> type_user(one) 
+    public function detail_user()
+    {
+        // 2 parameters (path model, field foreignkey)
+        return $this->hasMany('App\Models\ManagementAccess\DetailUser', 'type_user_id');
+    }
 }
