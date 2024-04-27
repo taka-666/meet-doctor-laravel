@@ -33,7 +33,7 @@ class StoreUserRequest extends FormRequest
                 'required', 'string', 'max:255',
             ],
             'email' => [
-                'required', 'email', 'unique:Users','max:50',
+                'required', 'email', 'unique:users','max:50',
             ],
             'password' => [
                 'min:8', 'string', 'max:100', 'mixedCase',
