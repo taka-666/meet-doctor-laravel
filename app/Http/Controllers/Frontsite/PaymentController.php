@@ -16,7 +16,11 @@ use Auth;
 // Models here
 use App\Models\User;
 use App\Models\Operational\Doctor;
+use App\Models\Operational\Appointment;
+use App\Models\Operational\Transaction;
+use App\Models\MasterData\Consultation;
 use App\Models\MasterData\Specialist;
+use App\Models\MasterData\ConfigPayment;
 
 // thirdparty packages
 
