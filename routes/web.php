@@ -22,10 +22,10 @@ Route::resource('/', LandingController::class);
 
 Route::group(['middleware' => ['auth:sanctum', 'verified']],function (){ 
         // Appointment page
-        Route::resource('home', AppointmentController::class);
+        Route::resource('appointment', AppointmentController::class);
 
         // Payment page
-        Route::resource('home', PaymentController::class);
+        Route::resource('payment', PaymentController::class);
 });
 
 // backsite nama menu
