@@ -1,26 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Frontsite;
+namespace App\Http\Controllers\Backsite;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-// use library here
-use Illuminate\Support\Facades\Storage;
-use Symfony\Component\HttpFoundation\Response;
-
-// use everything here
-// use Gate;
-use Auth;
-
-// Models here
-use App\Models\User;
-use App\Models\Operational\Doctor;
-use App\Models\MasterData\Consultation;
-
-// thirdparty packages
-
-class AppointmentController extends Controller
+class DashboardController extends Controller
 {
         /** 
      * create a new controller instance
@@ -33,7 +18,7 @@ class AppointmentController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -41,7 +26,7 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        return view('pages.frontsite.appointment.index');
+        return view('pages.backsite.dashboard.index');
     }
 
     /**
@@ -51,7 +36,7 @@ class AppointmentController extends Controller
      */
     public function create()
     {
-        return abort(404);
+        //
     }
 
     /**
@@ -62,7 +47,7 @@ class AppointmentController extends Controller
      */
     public function store(Request $request)
     {
-        return abort(404);
+        //
     }
 
     /**
@@ -73,7 +58,7 @@ class AppointmentController extends Controller
      */
     public function show($id)
     {
-        return abort(404);
+        //
     }
 
     /**
@@ -84,7 +69,7 @@ class AppointmentController extends Controller
      */
     public function edit($id)
     {
-        return abort(404);
+        //
     }
 
     /**
@@ -107,6 +92,6 @@ class AppointmentController extends Controller
      */
     public function destroy($id)
     {
-        return abort(404);
+        //
     }
 }

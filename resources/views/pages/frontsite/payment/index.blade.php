@@ -296,86 +296,86 @@
                 <!-- List Payment -->
                 <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-2 gap-5">
                     <div class="relative">
-                    <input
-                        type="radio"
-                        name="payment"
-                        x-model="payment"
-                        value="master-card"
-                        id="master-card"
-                        class="sr-only peer"/>
-                    <label
-                        class="flex flex-col justify-center items-center bg-white 
-                        border-[#EDEDED] cursor-pointer focus:outline-none hover:bg-gray-50
-                        peer-checked:ring-[#0D63F3] peer-checked:ring-2 peer-checked:border-transparent 
-                        rounded-3xl border-2 p-7"
-                        for="master-card">
-                        <img
-                            src="{{ ('/assets/frontsite/images/master-card.png') }}"
-                            class="max-h-[50px] inline-block"
-                            alt="Master card"/>
-                    </label>
+                        <input
+                            type="radio"
+                            name="payment"
+                            x-model="payment"
+                            value="master-card"
+                            id="master-card"
+                            class="sr-only peer"/>
+                        <label
+                            class="flex flex-col justify-center items-center bg-white 
+                            border-[#EDEDED] cursor-pointer focus:outline-none hover:bg-gray-50
+                            peer-checked:ring-[#0D63F3] peer-checked:ring-2 peer-checked:border-transparent 
+                            rounded-3xl border-2 p-7"
+                            for="master-card">
+                            <img
+                                src="{{ ('/assets/frontsite/images/master-card.png') }}"
+                                class="max-h-[50px] inline-block"
+                                alt="Master card"/>
+                        </label>
                     </div>
 
                     <div class="relative">
-                    <input
-                        type="radio"
-                        name="payment"
-                        x-model="payment"
-                        value="visa"
-                        id="visa"
-                        class="sr-only peer"/>
-                    <label
-                        class="flex flex-col justify-center items-center bg-white 
-                        border-[#EDEDED] cursor-pointer focus:outline-none hover:bg-gray-50 
-                        peer-checked:ring-[#0D63F3] peer-checked:ring-2 peer-checked:border-transparent 
-                        rounded-3xl border-2 p-7"
-                        for="visa">
-                        <img
-                            src="{{ ('/assets/frontsite/images/visa.png') }}"
-                            class="max-h-[50px] inline-block"
-                            alt="Master card"/>
-                    </label>
+                        <input
+                            type="radio"
+                            name="payment"
+                            x-model="payment"
+                            value="visa"
+                            id="visa"
+                            class="sr-only peer"/>
+                        <label
+                            class="flex flex-col justify-center items-center bg-white 
+                            border-[#EDEDED] cursor-pointer focus:outline-none hover:bg-gray-50 
+                            peer-checked:ring-[#0D63F3] peer-checked:ring-2 peer-checked:border-transparent 
+                            rounded-3xl border-2 p-7"
+                            for="visa">
+                            <img
+                                src="{{ ('/assets/frontsite/images/visa.png') }}"
+                                class="max-h-[50px] inline-block"
+                                alt="Master card"/>
+                        </label>
                     </div>
 
                     <div class="relative">
-                    <input
-                        type="radio"
-                        name="payment"
-                        x-model="payment"
-                        value="cirrus"
-                        id="cirrus"
-                        class="sr-only peer"/>
-                    <label
-                        class="flex flex-col justify-center items-center bg-white border-[#EDEDED] 
-                        cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-[#0D63F3] 
-                        peer-checked:ring-2 peer-checked:border-transparent rounded-3xl border-2 p-7"
-                        for="cirrus">
-                        <img
-                            src="{{ ('/assets/frontsite/images/cirrus.png') }}"
-                            class="max-h-[50px] inline-block"
-                            alt="Master card"/>
-                    </label>
+                        <input
+                            type="radio"
+                            name="payment"
+                            x-model="payment"
+                            value="cirrus"
+                            id="cirrus"
+                            class="sr-only peer"/>
+                        <label
+                            class="flex flex-col justify-center items-center bg-white border-[#EDEDED] 
+                            cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-[#0D63F3] 
+                            peer-checked:ring-2 peer-checked:border-transparent rounded-3xl border-2 p-7"
+                            for="cirrus">
+                            <img
+                                src="{{ ('/assets/frontsite/images/cirrus.png') }}"
+                                class="max-h-[50px] inline-block"
+                                alt="Master card"/>
+                        </label>
                     </div>
 
                     <div class="relative">
-                    <input
-                        type="radio"
-                        name="payment"
-                        x-model="payment"
-                        value="mewallet"
-                        id="mewallet"
-                        class="sr-only peer"/>
-                    <label
-                        class="flex flex-col justify-center items-center bg-white border-[#EDEDED] 
-                        cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-[#0D63F3] 
-                        peer-checked:ring-2 peer-checked:border-transparent rounded-3xl border-2 p-7"
-                        for="mewallet">
-                        <img
-                            src="{{ ('/assets/frontsite/images/mewallet.png') }}"
-                            class="max-h-[50px] inline-block"
-                            alt="Master card"/>
-                        <div class="text-[11px] sm:text-sm mt-3">Balance: $18,000</div>
-                    </label>
+                        <input
+                            type="radio"
+                            name="payment"
+                            x-model="payment"
+                            value="mewallet"
+                            id="mewallet"
+                            class="sr-only peer"/>
+                        <label
+                            class="flex flex-col justify-center items-center bg-white border-[#EDEDED] 
+                            cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-[#0D63F3] 
+                            peer-checked:ring-2 peer-checked:border-transparent rounded-3xl border-2 p-7"
+                            for="mewallet">
+                            <img
+                                src="{{ ('/assets/frontsite/images/mewallet.png') }}"
+                                class="max-h-[50px] inline-block"
+                                alt="Master card"/>
+                            <div class="text-[11px] sm:text-sm mt-3">Balance: $18,000</div>
+                        </label>
                     </div>
                 </div>
 
@@ -393,7 +393,8 @@
                     <!--
                     button when payment is empty.
                     -->
-                    <span x-show="!payment.length" class="bg-[#C0CADA] text-[#808997] cursor-not-allowed px-10 py-3 rounded-full text-center">
+                    <span x-show="!payment.length" class="bg-[#C0CADA] text-[#808997] 
+                    cursor-not-allowed px-10 py-3 rounded-full text-center">
                         Pay Now
                     </span>
                 </div>
