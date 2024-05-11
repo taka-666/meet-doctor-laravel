@@ -143,9 +143,9 @@
                             tabindex="-1"
                             id="user-menu-item-2">
                             Sign out
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                            style="display: none;">
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
+                            </form>
                         </a>
                     </div>
                 </div>
