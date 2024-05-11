@@ -9,6 +9,10 @@ use App\Http\Controllers\Frontsite\PaymentController;
 
 // Backsite
 use App\Http\Controllers\Backsite\DashboardController;
+use App\Http\Controllers\Backsite\UserController;
+use App\Http\Controllers\Backsite\PermissionController;
+use App\Http\Controllers\Backsite\TypeUserController;
+use App\Http\Controllers\Backsite\RoleController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,8 +37,21 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']],function (){
 // backsite nama menu
 Route::group(['prefix' => 'backsite', 'as' => 'backsite.', 'middleware' => ['auth:sanctum', 'verified']], 
 function (){ 
+
     // Dashboard page
     Route::resource('dashboard', DashboardController::class);
+
+    // User Page
+    Route::resource('user', UserController::class);
+
+    // Role Page
+    Route::resource('role', RoleController::class);
+
+    // TypeUser Page
+    Route::resource('type-user', TypeUserController::class);
+
+    // Permission Page
+    Route::resource('permission', PermissionController::class);
 });
 
 // Route::get('/', function () {
