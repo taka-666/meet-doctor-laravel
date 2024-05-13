@@ -8,11 +8,27 @@ use App\Http\Controllers\Frontsite\LandingController;
 use App\Http\Controllers\Frontsite\PaymentController;
 
 // Backsite
+// Backsite/Menagement Access
 use App\Http\Controllers\Backsite\DashboardController;
 use App\Http\Controllers\Backsite\UserController;
 use App\Http\Controllers\Backsite\PermissionController;
 use App\Http\Controllers\Backsite\TypeUserController;
 use App\Http\Controllers\Backsite\RoleController;
+
+// Backsite/Masteer Data
+use App\Http\Controllers\Backsite\ConfigPaymentController;
+use App\Http\Controllers\Backsite\ConsultationController;
+use App\Http\Controllers\Backsite\SpecialistController;
+
+// Backsite/Masteer Data
+use App\Http\Controllers\Backsite\ReportAppointmentController;
+use App\Http\Controllers\Backsite\DoctorController;
+use App\Http\Controllers\Backsite\ReportController;
+use App\Http\Controllers\Backsite\TransactionController;
+
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -52,7 +68,29 @@ function (){
 
     // Permission Page
     Route::resource('permission', PermissionController::class);
-});
+    
+    // Config-Payment Page
+    Route::resource('config-payment', ConfigPaymentController::class);
+    
+    // Consultation Page
+    Route::resource('consultation', ConsultationController::class);
+    
+    // Specialist Page
+    Route::resource('specialist', SpecialistController::class);
+    
+    // Appointment Backsite Page
+    Route::resource('appointment', ReportAppointmentController::class);
+    
+    // Doctor Backsite Page
+    Route::resource('doctor', DoctorController::class);
+    
+    // Report Backsite Page
+    Route::resource('report', ReportController::class);
+
+    // Transaction Backsite Page
+    Route::resource('transaction', TransactionController::class);
+});        
+
 
 // Route::get('/', function () {
 //     return view('welcome');

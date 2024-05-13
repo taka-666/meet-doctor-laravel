@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backsite;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class PermissionController extends Controller
+class ReportController extends Controller
 {
             /** 
      * create a new controller instance
@@ -18,6 +18,7 @@ class PermissionController extends Controller
     {
         $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -25,7 +26,7 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        return view('pages.backsite.management-access.permission.index');
+        return view('pages.backsite.operational.report.index');
     }
 
     /**

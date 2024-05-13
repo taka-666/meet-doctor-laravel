@@ -32,7 +32,9 @@
 
                         <!-- Form input -->
                         <form method="POST" action="{{ route('login') }}" class="grid gap-6">
+
                             @csrf
+
                             <label class="block">
                                 <input
                                 for="email" type="email" id="email" name="email"

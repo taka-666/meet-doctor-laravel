@@ -4,6 +4,6 @@
 
 @section('content')
 
-
+    Permissions
 
 @endsection

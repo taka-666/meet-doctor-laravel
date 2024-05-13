@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Role')
+@section('title', 'Consultation')
 
 @section('content')
 
-    Role
+    Consultation
 
 @endsection
