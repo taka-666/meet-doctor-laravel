@@ -38,11 +38,11 @@ class TypeUserController extends Controller
      */
     public function index()
     {
-        $type_user = TypeUser::orderBy('created_at', 'desc')->limit(3)->get();
+        $type_user = TypeUser::all();
 
         dd($type_user);
 
-        return view ('backsite/type-user.index', compact('type_user'));
+        return view ('pages.backsite.management-access.type-user.index', compact('type_user'));
     }
 
     /**
@@ -52,7 +52,7 @@ class TypeUserController extends Controller
      */
     public function create()
     {
-        return view('pages.backsite.management-access.permission.index');
+        // return view('pages.backsite.management-access.permission.index');
     }
 
     /**

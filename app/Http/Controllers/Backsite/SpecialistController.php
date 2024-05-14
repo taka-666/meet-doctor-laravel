@@ -3,7 +3,23 @@
 namespace App\Http\Controllers\Backsite;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+
+// use library here
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\Response;
+
+// request
+use App\Http\Requests\Specialist\StoreSpecialistRequest;
+use App\Http\Requests\Specialist\UpdateSpecialistRequest;
+
+// use everything here
+// use Gate;
+use Auth;
+
+// Models here
+use App\Models\MasterData\Specialist;
+
+// thirdparty packages
 
 class SpecialistController extends Controller
 {
@@ -26,7 +42,11 @@ class SpecialistController extends Controller
      */
     public function index()
     {
-        return view('pages.backsite.master-data.specialist.index');
+        $specialist = Specialist::orderBy('created_at', 'desc')->get();
+
+        dd($specialist);
+
+        return view ('pages.backsite.master-data.specialist.index', compact('specialist'));
     }
 
     /**
@@ -36,7 +56,7 @@ class SpecialistController extends Controller
      */
     public function create()
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -45,9 +65,16 @@ class SpecialistController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreSpecialistRequest $request)
     {
-        //
+        // get all requests from frontsite
+        $data = $request->all();
+
+        // store data ke database
+        $specialist = Specialist::create($data);
+
+        alert()->success('Successfully created', 'successfull added new specialist');
+        return redirect()->route('backsite.specialist.index');
     }
 
     /**
@@ -56,9 +83,10 @@ class SpecialistController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Specialist $specialist )
     {
-        //
+        // dd($specialist);
+        return view('pages.backsite.master-data.specialist.show', compact('specialist'));
     }
 
     /**
@@ -67,9 +95,9 @@ class SpecialistController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Specialist $specialist)
     {
-        //
+        return view('pages.backsite.master-data.specialist.edit', compact('specialist'));
     }
 
     /**
@@ -79,9 +107,16 @@ class SpecialistController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateSpecialistRequest $request, Specialist $specialist)
     {
-        //
+        // get all requests from frontsite
+        $data = $request->all();
+
+        // Update data ke database
+        $specialist = update($data);
+
+        alert()->success('Successfully updated', 'successfull updated specialist');
+        return redirect()->route('backsite.specialist.index');
     }
 
     /**
@@ -90,8 +125,11 @@ class SpecialistController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Specialist $specialist)
     {
-        //
+        $specialist-> delete($specialist);
+
+        alert()->success('Successfully Message', 'successfull deleted specialist');
+        return back();
     }
 }
