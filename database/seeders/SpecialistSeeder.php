@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\MasterData\Specialist;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+
+use App\Models\MasterData\Specialist;
 use Illuminate\Support\Facades\DB;
 
 class SpecialistSeeder extends Seeder

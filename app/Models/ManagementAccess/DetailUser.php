@@ -21,14 +21,15 @@ class DetailUser extends Model
         'deleted_at',
     ];
 
+    // declare fillable fields
     protected $fillable = [
-        'title',
         'user_id',
         'type_user_id',
         'contact',
         'address',
         'photo',
         'gender',
+        'age', 
         'created_at',
         'updated_at',
         'deleted_at',
