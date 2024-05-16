@@ -3,7 +3,26 @@
 namespace App\Http\Controllers\Backsite;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+
+// use library here
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\Response;
+
+// request
+use App\Http\Requests\Role\StoreRoleRequest;
+use App\Http\Requests\Role\UpdateRoleRequest;
+
+// use everything here
+// use Gate;
+use Auth;
+
+// Models here
+use App\Models\ManagementAccess\Role;
+use App\Models\ManagementAccess\RoleUser;
+use App\Models\ManagementAccess\Permission;
+use App\Models\ManagementAccess\PermissionRole;
+
+// thirdparty packages
 
 class RoleController extends Controller
 {
@@ -25,7 +44,10 @@ class RoleController extends Controller
      */
     public function index()
     {
-        return view('pages.backsite.management-access.role.index');
+        // for table grid
+        $role = Role::orderBy('created_at', 'desc')->get();
+
+        return view ('pages.backsite.management-access.role.index', compact('role'));
     }
 
     /**
@@ -44,9 +66,16 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRoleRequest $request)
     {
-        //
+        // get all requests from frontsite
+        $data = $request->all();
+
+        // store data ke database
+        $role = Role::create($data);
+
+        alert()->success('Successfully created', 'successfull added new role');
+        return redirect()->route('backsite.role.index');
     }
 
     /**
@@ -55,9 +84,12 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function show($id)
     {
-        //
+        $role->load('permission');
+
+        return view ('pages.backsite.management-access.role.index', compact('role'));
     }
 
     /**
@@ -68,7 +100,11 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        //
+        // for Select2 = ascending a to z
+        $permission = Permission::all();
+        $role->load('permission');
+
+        return view('pages.backsite.management-access.role.edit', compact('role'));
     }
 
     /**
@@ -78,9 +114,15 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRoleRequest $request,  Role $role)
     {
-        //
+
+        // get all requests from frontsite
+        $role->update($request->all());
+        $role->permission()->sync($request->input('permission',[]));
+
+        alert()->success('Successfully updated', 'successfull updated role');
+        return redirect()->route('backsite.role.index');
     }
 
     /**
@@ -89,8 +131,12 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+
+    public function destroy(Role $role)
     {
-        //
+        $role-> forceDelete($role);
+
+        alert()->success('Successfully Message', 'successfull deleted role');
+        return back();
     }
 }

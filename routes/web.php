@@ -20,11 +20,12 @@ use App\Http\Controllers\Backsite\ConfigPaymentController;
 use App\Http\Controllers\Backsite\ConsultationController;
 use App\Http\Controllers\Backsite\SpecialistController;
 
-// Backsite/Masteer Data
-use App\Http\Controllers\Backsite\ReportAppointmentController;
+// Backsite/Opeartional
 use App\Http\Controllers\Backsite\DoctorController;
 use App\Http\Controllers\Backsite\ReportController;
-use App\Http\Controllers\Backsite\TransactionController;
+use App\Http\Controllers\Backsite\ReportAppointmentController;
+use App\Http\Controllers\Backsite\ReportTransactionController;
+use App\Http\Controllers\Backsite\HospitalPatientControllerController;
 
 
 
@@ -64,13 +65,13 @@ function (){
     Route::resource('role', RoleController::class);
 
     // TypeUser Page
-    Route::resource('type-user', TypeUserController::class);
+    Route::resource('type_user', TypeUserController::class);
 
     // Permission Page
     Route::resource('permission', PermissionController::class);
     
     // Config-Payment Page
-    Route::resource('config-payment', ConfigPaymentController::class);
+    Route::resource('config_payment', ConfigPaymentController::class);
     
     // Consultation Page
     Route::resource('consultation', ConsultationController::class);
@@ -88,7 +89,10 @@ function (){
     Route::resource('report', ReportController::class);
 
     // Transaction Backsite Page
-    Route::resource('transaction', TransactionController::class);
+    Route::resource('transaction', ReportTransactionController::class);
+
+    // Hospital Patient Backsite Page
+    Route::resource('hospital_patient', HospitalPatientController::class);
 });        
 
 

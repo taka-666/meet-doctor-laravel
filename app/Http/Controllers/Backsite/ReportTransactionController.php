@@ -9,20 +9,20 @@ use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 
 // request
-use App\Http\Requests\ConfigPayment\UpdateConfigPaymentRequest;
 
 // use everything here
 // use Gate;
 use Auth;
 
 // Models here
-use App\Models\MasterData\ConfigPayment;
+use App\Models\MasterData\Consultation;
+use App\Models\Operational\Transaction;
 
 // thirdparty packages
 
-class ConfigPaymentController extends Controller
+class ReportTransactionController extends Controller
 {
-                /** 
+            /** 
      * create a new controller instance
      * 
      * @return void
@@ -33,19 +33,19 @@ class ConfigPaymentController extends Controller
     {
         $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
-        // for table grid
-        $config_payment = ConfigPayment::all();
+        // You must add validation with conditions session id user by type user doctor & patient
+        $transaction = Transaction::orderBy('created_at', 'desc')->get();
 
-        // for Select2 = ascending a to z
-
-        return view ('pages.backsite.master-data.config-payment.index', compact('config-payment'));
+        return view ('pages.backsite.operational.transaction.index', compact('transaction'));
     }
 
     /**
@@ -53,6 +53,7 @@ class ConfigPaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function create()
     {
         return abort(404);
@@ -64,6 +65,7 @@ class ConfigPaymentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
         return abort(404);
@@ -75,9 +77,10 @@ class ConfigPaymentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function show($id)
     {
-        return abort(404);
+        return view ('pages.backsite.operational.transaction.index', compact('transaction'));
     }
 
     /**
@@ -86,9 +89,10 @@ class ConfigPaymentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(ConfigPayment $config_payment)
+
+    public function edit($id)
     {
-        return view('pages.backsite.master-data.config-payment.edit', compact('config_payment'));
+        return abort(404);
     }
 
     /**
@@ -99,16 +103,9 @@ class ConfigPaymentController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function update(UpdateConfigPaymentRequest $request, ConfigPayment $config_payment)
+    public function update(Request $request, $id)
     {
-        // get all requests from frontsite
-        $data = $request->all();
-
-        // Update data ke database
-        $config_payment->update($data);
-
-        alert()->success('Successfully updated', 'successfull updated config payment');
-        return redirect()->route('backsite.config_payment.index');
+        return abort(404);
     }
 
     /**
@@ -117,6 +114,7 @@ class ConfigPaymentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function destroy($id)
     {
         return abort(404);

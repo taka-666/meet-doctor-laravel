@@ -3,16 +3,35 @@
 namespace App\Http\Controllers\Backsite;
 
 use App\Http\Controllers\Controller;
+
+// use library here
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\Request;
 
-class TransactionController extends Controller
+// use everything here
+// use Gate;
+use Illuminate\Support\Facades\Gate;
+use Auth;
+
+// use model here
+use App\Models\User;
+use App\Models\Operational\Appointment;
+use App\Models\Operational\Transaction;
+use App\Models\Operational\Doctor;
+use App\Models\MasterData\Specialist;
+use App\Models\MasterData\Consultation;
+use App\Models\MasterData\ConfigPayment;
+
+class HospitalPatientController extends Controller
 {
             /** 
      * create a new controller instance
      * 
      * @return void
      */
-    // pengamanan menggunakan construct auth
+    // keamanan menggunakan construct auth
 
     public function __construct()
     {
@@ -24,9 +43,15 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
-        return view('pages.backsite.operational.transaction.index');
+
+        $hospital_patient = User::whereHas('detail_user', function ($query) {
+                                    return $query->where('type_user_id', 3); // only load user typepatient or id 3 in type user table
+                                })->orderBy('created_at', 'desc')->get();
+
+        return view('pages.backsite.operational.hospital-patient.index', compact('hospital_patient'));
     }
 
     /**

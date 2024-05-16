@@ -3,7 +3,21 @@
 namespace App\Http\Controllers\Backsite;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+
+// use library here
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\Response;
+
+// request
+
+// use everything here
+// use Gate;
+use Auth;
+
+// Models here
+use App\Models\Operational\Appointment;
+
+// thirdparty packages
 
 class ReportAppointmentController extends Controller
 {
@@ -26,7 +40,10 @@ class ReportAppointmentController extends Controller
      */
     public function index()
     {
-        return view('pages.backsite.operational.appointment.index');
+        // You must add validation with conditions session id user by type user doctor & patient
+        $appointment = Appointment::orderBy('created_at', 'desc')->get();
+
+        return view ('pages.backsite.operational.appointment.index', compact('appointment'));
     }
 
     /**
@@ -58,7 +75,7 @@ class ReportAppointmentController extends Controller
      */
     public function show($id)
     {
-        return abort(404);
+        return view ('pages.backsite.operational.appointment.index', compact('appointment'));
     }
 
     /**
