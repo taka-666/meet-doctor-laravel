@@ -13,7 +13,7 @@ use App\Http\Requests\Specialist\StoreSpecialistRequest;
 use App\Http\Requests\Specialist\UpdateSpecialistRequest;
 
 // use everything here
-// use Gate;
+use Gate;
 use Auth;
 
 // Models here
@@ -42,9 +42,9 @@ class SpecialistController extends Controller
      */
     public function index()
     {
-        $specialist = Specialist::orderBy('created_at', 'desc')->get();
+        abort_if(Gate::denies('specialist_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        dd($specialist);
+        $specialist = Specialist::orderBy('created_at', 'desc')->get();
 
         return view ('pages.backsite.master-data.specialist.index', compact('specialist'));
     }
@@ -85,6 +85,8 @@ class SpecialistController extends Controller
      */
     public function show(Specialist $specialist )
     {
+        abort_if(Gate::denies('specialist_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         // dd($specialist);
         return view('pages.backsite.master-data.specialist.show', compact('specialist'));
     }
@@ -97,6 +99,8 @@ class SpecialistController extends Controller
      */
     public function edit(Specialist $specialist)
     {
+        abort_if(Gate::denies('specialist_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('pages.backsite.master-data.specialist.edit', compact('specialist'));
     }
 

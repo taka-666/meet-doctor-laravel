@@ -13,7 +13,7 @@ use App\Http\Requests\Consultation\StoreConsultationRequest;
 use App\Http\Requests\Consultation\UpdateConsultationRequest;
 
 // use everything here
-// use Gate;
+use Gate;
 use Auth;
 
 // Models here
@@ -42,6 +42,8 @@ class ConsultationController extends Controller
 
     public function index()
     {
+        abort_if(Gate::denies('consultation_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         // for table grid
         $consultation = Consultation::orderBy('created_at', 'desc')->get();
 
@@ -84,8 +86,10 @@ class ConsultationController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function show($id)
+    public function show(Consultation $consultation)
     {
+        abort_if(Gate::denies('consultation_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view ('pages.backsite.master-data.consultation.index', compact('consultation'));
     }
 
@@ -95,8 +99,10 @@ class ConsultationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Consultation $consultation)
     {
+        abort_if(Gate::denies('consultation_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         // for Select2 = ascending a to z
         $consultation = Consultation::orderBy('name', 'asc')->get();
 
@@ -129,7 +135,7 @@ class ConsultationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Consultation $consultation)
     {
         $consultation-> forceDelete($consultation);
 

@@ -26,6 +26,8 @@ class ReportController extends Controller
      */
     public function index()
     {
+        abort_if(Gate::denies('report_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('pages.backsite.operational.report.index');
     }
 

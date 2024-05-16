@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 // request
 
 // use everything here
-// use Gate;
+use Gate;
 use Auth;
 
 // Models here
@@ -40,6 +40,8 @@ class ReportAppointmentController extends Controller
      */
     public function index()
     {
+        abort_if(Gate::denies('appointment_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         // You must add validation with conditions session id user by type user doctor & patient
         $appointment = Appointment::orderBy('created_at', 'desc')->get();
 

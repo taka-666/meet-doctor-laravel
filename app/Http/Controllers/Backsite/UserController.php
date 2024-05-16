@@ -8,6 +8,22 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
+use App\Http\Requests\User\StoreUserRequest;
+use App\Http\Requests\User\UpdateUserRequest;
+
+// use everything here
+// use Gate;
+use Illuminate\Support\Facades\Gate;
+use Auth;
+
+// use model here
+use App\Models\User;
+use App\Models\ManagementAccess\DetailUser;
+use App\Models\ManagementAccess\Permission;
+use App\Models\ManagementAccess\Role;
+use App\Models\MasterData\TypeUser;
+
+// thirdparty package
 class UserController extends Controller
 {
                 /** 

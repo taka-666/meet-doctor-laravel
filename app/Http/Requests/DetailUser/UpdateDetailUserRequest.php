@@ -3,7 +3,7 @@
 namespace App\Http\Requests\DetailUser;
 
 use App\Models\ManagementAccess\DetailUser;
-// use Gate;
+use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use symfony\component\HttpFoundation\Response;
 
@@ -16,6 +16,8 @@ class UpdateDetailUserRequest extends FormRequest
      */
     public function authorize()
     {
+        abort_if(Gate::denies('detail_user_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return true;
     }
 

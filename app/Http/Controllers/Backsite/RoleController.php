@@ -13,7 +13,7 @@ use App\Http\Requests\Role\StoreRoleRequest;
 use App\Http\Requests\Role\UpdateRoleRequest;
 
 // use everything here
-// use Gate;
+use Gate;
 use Auth;
 
 // Models here
@@ -44,6 +44,8 @@ class RoleController extends Controller
      */
     public function index()
     {
+        abort_if(Gate::denies('role_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         // for table grid
         $role = Role::orderBy('created_at', 'desc')->get();
 
@@ -85,8 +87,10 @@ class RoleController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function show($id)
+    public function show(Role $role)
     {
+        abort_if(Gate::denies('role_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $role->load('permission');
 
         return view ('pages.backsite.management-access.role.index', compact('role'));
@@ -98,8 +102,10 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Role $role)
     {
+        abort_if(Gate::denies('role_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         // for Select2 = ascending a to z
         $permission = Permission::all();
         $role->load('permission');
