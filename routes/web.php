@@ -10,10 +10,10 @@ use App\Http\Controllers\Frontsite\PaymentController;
 // Backsite
 // Backsite/Menagement Access
 use App\Http\Controllers\Backsite\DashboardController;
-use App\Http\Controllers\Backsite\UserController;
 use App\Http\Controllers\Backsite\PermissionController;
-use App\Http\Controllers\Backsite\TypeUserController;
 use App\Http\Controllers\Backsite\RoleController;
+use App\Http\Controllers\Backsite\UserController;
+use App\Http\Controllers\Backsite\TypeUserController;
 
 // Backsite/Masteer Data
 use App\Http\Controllers\Backsite\ConfigPaymentController;
@@ -45,9 +45,12 @@ Route::resource('/', LandingController::class);
 
 Route::group(['middleware' => ['auth:sanctum', 'verified']],function (){ 
         // Appointment page
+        Route::get('appointment/doctor/{id}', [AppointmentController::class, 'appointment'])->name('appointment.doctor');
         Route::resource('appointment', AppointmentController::class);
 
         // Payment page
+        Route::get('payment/success', [PaymentController::class, 'success'])->name('payment.success');
+        Route::get('payment/appointment/{id}', [PaymentController::class, 'payment'])->name('payment.appointment');
         Route::resource('payment', PaymentController::class);
 });
 

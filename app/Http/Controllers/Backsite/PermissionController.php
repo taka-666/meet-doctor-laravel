@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Backsite;
 
+use App\Http\Controllers\Controller;
+
 // use library here
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;

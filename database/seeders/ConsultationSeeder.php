@@ -18,6 +18,7 @@ class ConsultationSeeder extends Seeder
     {
         // create data here
         $consultation = [
+            // mungkin ada update untuk consultation dengan cara inputan user
             [
                 'name' => 'Sesak Jantung',
                 'created_at' => date('Y-m-d H:i:s'),
