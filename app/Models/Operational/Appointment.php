@@ -34,18 +34,18 @@ class Appointment extends Model
         'deleted_at',
     ];
 
+    // one to one = hasOne + BelongsToOne
+    public function transaction()
+    {
+        // 2 parameters (path model, field foreignkey)
+        return $this->hasOne('App\Models\Operational\Transaction', 'appointment_id',);
+    }
+
     // one to many
     public function doctor()
     {
         // 3 parameters (path model, field foreignkey, field primary key from table hasMany/hasOne) 
         return $this->belongsTo('App\Models\Operational\Doctor', 'doctor_id', 'id');
-    }
-
-    // one to many
-    public function consultation_id()
-    {
-        // 3 parameters (path model, field foreignkey, field primary key from table hasMany/hasOne) 
-        return $this->belongsTo('App\Models\MasterData\Consultation', 'consultation_id', 'id');
     }
 
     // one to many
@@ -55,12 +55,10 @@ class Appointment extends Model
         return $this->belongsTo('App\Models\User', 'user_id', 'id');
     }
 
-    // one to one = hasOne + BelongsToOne
-    public function transaction()
+    // one to many
+    public function consultation_id()
     {
-        // 2 parameters (path model, field foreignkey)
-        return $this->hasOne('App\Models\Operational\Transaction', 'appointment_id',);
+        // 3 parameters (path model, field foreignkey, field primary key from table hasMany/hasOne) 
+        return $this->belongsTo('App\Models\MasterData\Consultation', 'consultation_id', 'id');
     }
-
-
 }

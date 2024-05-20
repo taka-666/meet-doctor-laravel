@@ -83,8 +83,6 @@ class DoctorController extends Controller
         // get all request from frontsite
         $data = $request->all();
 
-        dd($data);
-
         // re format before push to table
         $data['fee'] = str_replace(',', '', $data['fee']);
         $data['fee'] = str_replace('IDR ', '', $data['fee']);
@@ -95,15 +93,13 @@ class DoctorController extends Controller
             $response = Storage::makeDirectory('public/assets/file-doctor');
         }
 
-        // change file locations
+        // change file locations / convert to string
         if(isset($data['photo'])){
             $data['photo'] = $request->file('photo')->store('assets/file-doctor', 'public');
 
         }else{
             $data['photo'] = "";
         }
-
-        dd($data);
 
         // store to database
         $doctor = Doctor::create($data);

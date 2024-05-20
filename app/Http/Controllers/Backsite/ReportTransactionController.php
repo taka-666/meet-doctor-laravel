@@ -45,9 +45,17 @@ class ReportTransactionController extends Controller
         abort_if(Gate::denies('transaction_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // You must add validation with conditions session id user by type user doctor & patient
-        $transaction = Transaction::orderBy('created_at', 'desc')->get();
+        $type_user_condition = Auth::user()->detail_user->type_user_id;
 
-        return view ('pages.backsite.operational.transaction.index', compact('transaction'));
+        if($type_user_condition == 1){
+            // for admin
+            $transaction = Transaction::orderBy('created_at', 'desc')->get();
+        }else{
+            // other admin for doctor & patient ( task for everyone here )
+            $transaction = Transaction::orderBy('created_at', 'desc')->get();
+        }
+
+        return view('pages.backsite.operational.transaction.index', compact('transaction'));
     }
 
     /**

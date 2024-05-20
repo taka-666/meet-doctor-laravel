@@ -16,10 +16,8 @@ use App\Http\Requests\Consultation\UpdateConsultationRequest;
 use Gate;
 use Auth;
 
-// Models here
+// use model here
 use App\Models\MasterData\Consultation;
-
-// thirdparty packages
 
 class ConsultationController extends Controller
 {
@@ -137,6 +135,8 @@ class ConsultationController extends Controller
      */
     public function destroy(Consultation $consultation)
     {
+        abort_if(Gate::denies('consultation_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $consultation-> forceDelete($consultation);
 
         alert()->success('Successfully Message', 'successfull deleted consultation');

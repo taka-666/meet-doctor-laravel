@@ -67,13 +67,17 @@ class SpecialistController extends Controller
      */
     public function store(StoreSpecialistRequest $request)
     {
-        // get all requests from frontsite
+        // get all request from frontsite
         $data = $request->all();
 
-        // store data ke database
+        // re format before push to table
+        $data['price'] = str_replace(',', '', $data['price']);
+        $data['price'] = str_replace('IDR ', '', $data['price']);
+
+        // store to database
         $specialist = Specialist::create($data);
 
-        alert()->success('Successfully created', 'successfull added new specialist');
+        alert()->success('Success Message', 'Successfully added new specialist');
         return redirect()->route('backsite.specialist.index');
     }
 
@@ -113,13 +117,17 @@ class SpecialistController extends Controller
      */
     public function update(UpdateSpecialistRequest $request, Specialist $specialist)
     {
-        // get all requests from frontsite
+        // get all request from frontsite
         $data = $request->all();
 
-        // Update data ke database
-        $specialist = update($data);
 
-        alert()->success('Successfully updated', 'successfull updated specialist');
+        $data['price'] = str_replace(',', '', $data['price']);
+        $data['price'] = str_replace('IDR ', '', $data['price']);
+
+        // update to database
+        $specialist->update($data);
+
+        alert()->success('Success Message', 'Successfully updated specialist');
         return redirect()->route('backsite.specialist.index');
     }
 
@@ -131,6 +139,8 @@ class SpecialistController extends Controller
      */
     public function destroy(Specialist $specialist)
     {
+        abort_if(Gate::denies('specialist_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $specialist-> delete($specialist);
 
         alert()->success('Successfully Message', 'successfull deleted specialist');

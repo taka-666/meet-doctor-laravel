@@ -59,7 +59,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -140,6 +140,8 @@ class RoleController extends Controller
 
     public function destroy(Role $role)
     {
+        abort_if(Gate::denies('role_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $role-> forceDelete($role);
 
         alert()->success('Successfully Message', 'successfull deleted role');
