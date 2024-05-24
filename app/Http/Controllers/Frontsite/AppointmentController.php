@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 
 // use everything here
-// use Gate;
-use Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 // use model here
 use App\Models\User;

@@ -7,12 +7,13 @@ use App\Http\Controllers\Controller;
 // use library here
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Request;
 
 // request
 
 // use everything here
-use Gate;
-use Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 // Models here
 use App\Models\Operational\Appointment;

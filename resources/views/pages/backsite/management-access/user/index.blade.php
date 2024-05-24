@@ -205,9 +205,7 @@
                                                                 <td style="width:200px;">
                                                                     <span class="badge bg-success mr-1 mb-1">{{ $user_item->detail_user->type_user->name ?? '' }}</span>
                                                                 </td>
-
                                                                 <td class="text-center">
-                                                                    @can('user_show' || 'user_edit' || 'user_delete')
 
                                                                     <div class="btn-group mr-1 mb-1">
                                                                         <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
@@ -237,9 +235,7 @@
                                                                         </div>
                                                                     </div>
 
-                                                                    @endcan
                                                                 </td>
-
                                                             </tr>
                                                         @empty
                                                             {{-- not found --}}

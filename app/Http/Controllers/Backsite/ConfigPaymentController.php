@@ -6,13 +6,14 @@ use App\Http\Controllers\Controller;
 
 // use library here
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 // request
 use App\Http\Requests\ConfigPayment\UpdateConfigPaymentRequest;
 
 // use everything here
-use Gate;
+use Illuminate\Support\Facades\Gate;
 use Auth;
 
 // Models here

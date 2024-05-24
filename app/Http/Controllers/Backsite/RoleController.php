@@ -13,8 +13,8 @@ use App\Http\Requests\Role\StoreRoleRequest;
 use App\Http\Requests\Role\UpdateRoleRequest;
 
 // use everything here
-use Gate;
-use Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 // Models here
 use App\Models\ManagementAccess\Role;

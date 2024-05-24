@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\Request;
 
 // use everything here
-use Gate;
+use Illuminate\Support\Facades\Gate;
 use Auth;
 
 // use model here

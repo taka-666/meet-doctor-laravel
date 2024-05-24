@@ -1,23 +1,29 @@
 <?php
 
-namespace App\Http\Controllers\Backsite;
+namespace App\Http\Controllers\Frontsite;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+
+// use library here
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
-
+// use everything here
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Auth;
-class ReportController extends Controller
+use Illuminate\Support\Facades\Auth;;
+
+// use model here
+use App\Models\User;
+
+class RegisterController extends Controller
 {
-            /** 
-     * create a new controller instance
-     * 
+    /**
+     * Create a new controller instance.
+     *
      * @return void
      */
-    // pengamanan menggunakan construct auth
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -30,9 +36,7 @@ class ReportController extends Controller
      */
     public function index()
     {
-        abort_if(Gate::denies('report_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        return view('pages.backsite.operational.report.index');
+        return view('pages.frontsite.success.signup-success');
     }
 
     /**

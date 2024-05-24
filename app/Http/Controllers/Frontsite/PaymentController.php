@@ -11,8 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Str;
 
 // use everything here
-// use Gate;
-use Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 use Exception;
 
 // use model here
@@ -70,7 +70,7 @@ class PaymentController extends Controller
         $data = $request->all();
 
         // set random code for transaction code
-        $data['transaction_code'] = Str::upper(Str::random(8).'-'.date('Ymd'));
+        // $data['transaction_code'] = Str::upper(Str::random(8).'-'.date('Ymd'));
 
         $appointment = Appointment::where('id', $data['appointment_id'])->first();
         $config_payment = ConfigPayment::first();
@@ -91,7 +91,7 @@ class PaymentController extends Controller
         // save to database
         $transaction = new Transaction;
         $transaction->appointment_id = $appointment['id'];
-        $transaction->transaction_code = $data['transaction_code'];
+        // $transaction->transaction_code = $data['transaction_code'];
         $transaction->fee_doctor = $doctor_fee;
         $transaction->fee_specialist = $specialist_fee;
         $transaction->fee_hospital = $hospital_fee;

@@ -17,6 +17,7 @@ class RoleUserSeeder extends Seeder
      * @return void
      */
 
+    // Set for Super Admin
     public function run()
     {
         User::findOrFail(1)->role()->sync(1);

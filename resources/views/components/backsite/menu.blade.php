@@ -13,7 +13,7 @@
             <li class=" navigation-header"><span data-i18n="Application">Application</span><i class="la la-ellipsis-h" data-toggle="tooltip" data-placement="right" data-original-title="Application"></i>
             </li>
 
-            {{-- @can('management_access') --}}
+            @can('management_access')
                 <li class=" nav-item"><a href="#"><i class="{{ request()->is('backsite/permission') || request()->is
                 ('backsite/permission/*') || request()->is('backsite/*/permission') || request()->is('backsite/*/permission/*') 
                 || request()->is('backsite/role') || request()->is('backsite/role/*') || request()->is('backsite/*/role') || 
@@ -60,9 +60,9 @@
 
                     </ul>
                 </li>
-            {{-- @endcan --}}
+            @endcan
 
-            {{-- @can('master_data_access') --}}
+            @can('master_data_access')
                 <li class=" nav-item"><a href="#"><i class="{{ request()->is('backsite/specialist') || request()->is
                 ('backsite/specialist/*') || request()->is('backsite/*/specialist') || request()->is('backsite/*/specialist/*') || 
                 request()->is('backsite/consultation') || request()->is('backsite/consultation/*') || request()->is
@@ -72,38 +72,38 @@
                 data-i18n="Master Data">Master Data</span></a>
                     <ul class="menu-content">
 
-                        {{-- @can('specialist_access') --}}
+                        @can('specialist_access')
                             <li class="{{ request()->is('backsite/specialist') || request()->is('backsite/specialist/*') || 
                             request()->is('backsite/*/specialist') || request()->is('backsite/*/specialist/*') ? 'active' : '' }} ">
                                 <a class="menu-item" href="{{ route('backsite.specialist.index') }}">
                                     <i></i><span>Specialist</span>
                                 </a>
                             </li>
-                        {{-- @endcan --}}
+                        @endcan
 
-                        {{-- @can('consultation_access') --}}
+                        @can('consultation_access')
                             <li class="{{ request()->is('backsite/consultation') || request()->is('backsite/consultation/*') || 
                             request()->is('backsite/*/consultation') || request()->is('backsite/*/consultation/*') ? 'active' : '' }} ">
                                 <a class="menu-item" href="{{ route('backsite.consultation.index') }}">
                                     <i></i><span>Consultation</span>
                                 </a>
                             </li>
-                        {{-- @endcan --}}
+                        @endcan
 
-                        {{-- @can('config_payment_access') --}}
+                        @can('config_payment_access')
                             <li class="{{ request()->is('backsite/config_payment') || request()->is('backsite/config_payment/*') || 
                             request()->is('backsite/*/config_payment') || request()->is('backsite/*/config_payment/*') ? 'active' : '' }} ">
                                 <a class="menu-item" href="{{ route('backsite.config_payment.index') }}">
                                     <i></i><span>Config Payment</span>
                                 </a>
                             </li>
-                        {{-- @endcan --}}
+                        @endcan
 
                     </ul>
                 </li>
-            {{-- @endcan --}}
+            @endcan
 
-            {{-- @can('operational_access') --}}
+            @can('operational_access')
                 <li class=" nav-item"><a href="#"><i class="{{ request()->is('backsite/doctor') || request()->is('backsite/doctor/*') 
                 || request()->is('backsite/*/doctor') || request()->is('backsite/*/doctor/*') || request()->is('backsite/hospital_patient') 
                 || request()->is('backsite/hospital_patient/*') || request()->is('backsite/*/hospital_patient') || request()->is
@@ -123,40 +123,40 @@
                             </li>
                         @endcan
 
-                        {{-- @can('hospital_patient_access') --}}
+                        @can('hospital_patient_access')
                             <li class="{{ request()->is('backsite/hospital_patient') || request()->is('backsite/hospital_patient/*') || 
                             request()->is('backsite/*/hospital_patient') || request()->is('backsite/*/hospital_patient/*') ? 'active' : '' }} ">
                                 <a class="menu-item" href="{{ route('backsite.hospital_patient.index') }}">
                                     <i></i><span>Hospital Patient</span>
                                 </a>
                             </li>
-                        {{-- @endcan --}}
+                        @endcan
 
 
                         {{-- here you can add nurse --}}
 
 
-                        {{-- @can('appointment_access') --}}
+                        @can('appointment_access')
                             <li class="{{ request()->is('backsite/appointment') || request()->is('backsite/appointment/*') || 
                             request()->is('backsite/*/appointment') || request()->is('backsite/*/appointment/*') ? 'active' : '' }} ">
                                 <a class="menu-item" href="{{ route('backsite.appointment.index') }}">
                                     <i></i><span>Appointment</span>
                                 </a>
                             </li>
-                        {{-- @endcan --}}
+                        @endcan
 
-                        {{-- @can('transaction_access') --}}
+                        @can('transaction_access')
                             <li class="{{ request()->is('backsite/transaction') || request()->is('backsite/transaction/*') || 
                             request()->is('backsite/*/transaction') || request()->is('backsite/*/transaction/*') ? 'active' : '' }} ">
                                 <a class="menu-item" href="{{ route('backsite.transaction.index') }}">
                                     <i></i><span>Transaction</span>
                                 </a>
                             </li>
-                        {{-- @endcan --}}
+                        @endcan
 
                     </ul>
                 </li>
-            {{-- @endcan --}}
+            @endcan
 
         </ul>
     </div>

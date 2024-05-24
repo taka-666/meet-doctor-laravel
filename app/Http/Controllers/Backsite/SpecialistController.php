@@ -13,8 +13,8 @@ use App\Http\Requests\Specialist\StoreSpecialistRequest;
 use App\Http\Requests\Specialist\UpdateSpecialistRequest;
 
 // use everything here
-use Gate;
-use Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 // Models here
 use App\Models\MasterData\Specialist;

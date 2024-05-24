@@ -13,7 +13,8 @@ use App\Http\Requests\Consultation\StoreConsultationRequest;
 use App\Http\Requests\Consultation\UpdateConsultationRequest;
 
 // use everything here
-use Gate;
+use Illuminate\Support\Facades\Gate;
+// use Gate;
 use Auth;
 
 // use model here
