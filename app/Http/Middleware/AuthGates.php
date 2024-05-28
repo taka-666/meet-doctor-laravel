@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\ManagementAccess\Role;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
+use Log;
 
 class AuthGates
 {
