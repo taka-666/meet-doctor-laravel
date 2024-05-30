@@ -37,6 +37,6 @@ class Transaction extends Model
     public function appointment()
     {
         // 3 parameters (path model, field foreignkey, field primary key from table hasMany/hasOne) 
-        return $this->belongsTo('App\Models\Operational\Doctor', 'appointment_id', 'id');
+        return $this->belongsTo('App\Models\Operational\Appointment', 'appointment_id', 'id');
     }
 }

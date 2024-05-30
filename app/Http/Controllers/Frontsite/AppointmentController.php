@@ -66,11 +66,16 @@ class AppointmentController extends Controller
     {
         $data = $request->all();
 
+        // Check if the consultation topic already exists
+        $consultation = Consultation::firstOrCreate(
+            ['name' => $data['consultation_topic']],
+            ['name' => $data['consultation_topic']]
+        );
+
         $appointment = new Appointment;
         $appointment->doctor_id = $data['doctor_id'];
         $appointment->user_id = Auth::user()->id;
-        $appointment->consultation_id = $data['consultation_id'];
-        $appointment->level = $data['level_id'];
+        $appointment->consultation_id = $consultation->id;
         $appointment->date = $data['date'];
         $appointment->time = $data['time'];
         $appointment->status = 2; // set to waiting payment
@@ -128,8 +133,7 @@ class AppointmentController extends Controller
     public function appointment($id)
     {
         $doctor = Doctor::where('id', $id)->first();
-        $consultation = Consultation::orderBy('name', 'asc')->get();
 
-        return view('pages.frontsite.appointment.index', compact('doctor', 'consultation'));
+        return view('pages.frontsite.appointment.index', compact('doctor', ));
     }
 }

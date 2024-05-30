@@ -88,19 +88,25 @@ function (){
     // Specialist Page
     Route::resource('specialist', SpecialistController::class);
     
-    // Appointment Backsite Page
-    Route::resource('appointment', ReportAppointmentController::class);
-    
     // Doctor Backsite Page
     Route::resource('doctor', DoctorController::class);
     
     // Report Backsite Page
     Route::resource('report', ReportController::class);
-
-    // Transaction Backsite Page
-    Route::resource('transaction', ReportTransactionController::class);
-
+    
     // Hospital Patient Backsite Page
     Route::resource('hospital_patient', HospitalPatientController::class);
+
+    // report appointment untuk export Backsite Page
+    Route::resource('appointment', ReportAppointmentController::class);
+
+    // Export transaction for appointment Backsite Page
+    Route::post('appointment/export', [ReportAppointmentController::class, 'export'])->name('appointment.export');
+
+    // report transaction untuk export Backsite Page
+    Route::resource('transaction', ReportTransactionController::class);
+
+    // Export transaction for transaction
+    Route::get('transaction/export/{id}', [ReportTransactionController::class, 'export'])->name('transaction.export');
 });        
 

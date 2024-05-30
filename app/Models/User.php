@@ -66,30 +66,28 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    // many to many
+    // many to many --- //
     public function role()
     {
         return $this->belongsToMany('App\Models\ManagementAccess\Role');
     }
 
-    // one to many = hasMany + BelongsToOne
+    // one to many
     public function appointment()
     {
-        // 2 parameters (path model, field foreignkey)
+        // 2 parameter (path model, field foreign key)
         return $this->hasMany('App\Models\Operational\Appointment', 'user_id');
     }
 
-    // one to one = hasOne + BelongsToOne
     public function detail_user()
     {
-        // 2 parameters (path model, field foreignkey)
+        // 2 parameter (path model, field foreign key)
         return $this->hasOne('App\Models\ManagementAccess\DetailUser', 'user_id');
     }
 
-    // one to one = hasOne + BelongsToOne
     public function role_user()
     {
-        // 2 parameters (path model, field foreignkey)
+        // 2 parameter (path model, field foreign key)
         return $this->hasMany('App\Models\ManagementAccess\RoleUser', 'user_id');
     }
 }

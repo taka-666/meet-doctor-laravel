@@ -195,7 +195,7 @@
                                                     <thead>
                                                         <tr>
                                                             <th>Date</th>
-                                                            <th>User Account</th>
+                                                            {{-- <th>User Account</th> --}}
                                                             <th>Specialist</th>
                                                             <th>Name</th>
                                                             <th>Fee</th>
@@ -207,7 +207,7 @@
                                                         @forelse($doctor as $key => $doctor_item)
                                                             <tr data-entry-id="{{ $doctor_item->id }}">
                                                                 <td>{{ isset($doctor_item->created_at) ? date("d/m/Y H:i:s",strtotime($doctor_item->created_at)) : '' }}</td>
-                                                                <td>{{ $doctor_item->user->name ?? '' }}</td>
+                                                                {{-- <td>{{ $doctor_item->user->name ?? '' }}</td> --}}
                                                                 <td>{{ $doctor_item->specialist->name ?? '' }}</td>
                                                                 <td>{{ $doctor_item->name ?? '' }}</td>
                                                                 <td>{{ 'IDR '.number_format($doctor_item->fee) ?? '' }}</td>
@@ -254,7 +254,7 @@
                                                     <tfoot>
                                                         <tr>
                                                             <th>Date</th>
-                                                            <th>User Account</th>
+                                                            {{-- <th>User Account</th> --}}
                                                             <th>Specialist</th>
                                                             <th>Name</th>
                                                             <th>Fee</th>

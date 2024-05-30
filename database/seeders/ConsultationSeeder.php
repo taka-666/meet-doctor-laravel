@@ -19,21 +19,6 @@ class ConsultationSeeder extends Seeder
         // create data here
         $consultation = [
             // mungkin ada update untuk consultation dengan cara inputan user
-            [
-                'name' => 'Sesak Jantung',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name' => 'Tekanan Darah Tinggi',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'name' => 'Gangguan Irama Jantung',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
         ];
         // array ini $consultation akan dimasukkan kedalam tabel consultation
         Consultation::insert($consultation);

@@ -10,17 +10,23 @@ use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\Request;
 
 
-// request
-
 // use everything here
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Auth;
+use Gate;
+use Auth;
 
-// Models here
-use App\Models\MasterData\Consultation;
+// use model here
 use App\Models\Operational\Transaction;
+use App\Models\Operational\Appointment;
+use App\Models\Operational\Doctor;
+use App\Models\User;
+use App\Models\ManagementAccess\DetailUser;
+use App\Models\MasterData\Consultation;
+use App\Models\MasterData\Specialist;
+use App\Models\MasterData\ConfigPayment;
 
-// thirdparty packages
+// thirdparty package
+use App\Exports\TransactionExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReportTransactionController extends Controller
 {
@@ -42,20 +48,39 @@ class ReportTransactionController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('transaction_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // You must add validation with conditions session id user by type user doctor & patient
-        $type_user_condition = Auth::user()->detail_user->type_user_id;
+        $user_id = Auth::id();
+        $user_type = Auth::user()->detail_user->type_user_id;
 
-        if($type_user_condition == 1){
-            // for admin
+        if ($user_type == 1) {
+            // Jika pengguna adalah admin, maka dia bisa melihat semua janji temu
             $transaction = Transaction::orderBy('created_at', 'desc')->get();
-        }else{
-            // other admin for doctor & patient ( task for everyone here )
+        } elseif ($user_type == 2) {
+            // Jika pengguna adalah tipe 2, maka dia bisa melihat semua janji temu
             $transaction = Transaction::orderBy('created_at', 'desc')->get();
+        } elseif ($user_type == 3) {
+            // Jika pengguna adalah tipe 3, maka dia hanya bisa melihat janji temunya sendiri
+            $transaction = Transaction::where('user_id', $user_id)->orderBy('created_at', 'desc')->get();
         }
+
+        // Mengambil nilai start_date dan end_date dari request
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        // Membuat query untuk mengambil data appointment
+        $query = Transaction::query();
+
+        // Jika start_date dan end_date diisi, tambahkan kondisi ke query
+        if ($startDate && $endDate) {
+            $query->whereBetween('date', [$startDate, $endDate]);
+        }
+
+        // Mengambil data appointment berdasarkan query
+        $transaction = $query->get();
 
         return view('pages.backsite.operational.transaction.index', compact('transaction'));
     }
@@ -130,5 +155,12 @@ class ReportTransactionController extends Controller
     public function destroy($id)
     {
         return abort(404);
+    }
+
+    public function export($id) 
+    {
+        abort_if(Gate::denies('transaction_export'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        return Excel::download(new TransactionExport, 'transaction.xlsx');
     }
 }
