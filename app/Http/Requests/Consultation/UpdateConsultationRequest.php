@@ -32,7 +32,7 @@ class UpdateConsultationRequest extends FormRequest
     {
         return [
             'name' => [
-                'required', 'string', 'max:50', Rule::unique('consultation')->ignore($this->consultation),
+                'required', 'string', 'max:1000', Rule::unique('consultation')->ignore($this->consultation),
                 // rule unique only works for other record id
             ],
         ];

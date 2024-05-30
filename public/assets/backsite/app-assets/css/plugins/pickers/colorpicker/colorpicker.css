@@ -32,7 +32,7 @@
       text-decoration: none; }
   .sp-button-container .sp-choose {
     color: #fff;
-    background-color: #50CAED; }
+    background-color: #0D63F3; }
 
 .sp-container button {
   background-image: none !important;
@@ -40,9 +40,9 @@
   .sp-container button:hover {
     border: 1px solid transparent !important;
     color: #fff;
-    background-color: #50CAED !important; }
+    background-color: #0D63F3 !important; }
   .sp-container button:active {
     border: 1px solid transparent !important;
     color: #fff;
-    background-color: #50CAED !important;
+    background-color: #0D63F3 !important;
     box-shadow: none !important; }

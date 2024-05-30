@@ -8,6 +8,7 @@
     <div class="content-overlay"></div>
     <div class="content-wrapper">
 
+        {{-- Handle Error --}}
         @if ($errors->any())
             <div class="alert bg-danger alert-dismissible mb-2" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -20,7 +21,9 @@
                 </ul>
             </div>
         @endif
+        {{-- End Handle Error --}}
 
+        {{-- Header Dashboard --}}
         <div class="content-header row">
             <div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
                 <h3 class="content-header-title mb-0 d-inline-block">Transaction</h3>
@@ -34,7 +37,9 @@
                 </div>
             </div>
         </div>
+        {{--End Header Dashboard --}}
 
+        {{-- Transaction Table --}}
         @can('transaction_table')
             <div class="content-body">
                 <section id="table-home">
@@ -77,6 +82,7 @@
                                                 </div>
                                             </div>
                                         </form>
+                                        <!--End Filter Form -->
 
                                         <div class="table-responsive">
                                             <table class="table table-striped table-bordered text-inputs-searching default-table">
@@ -127,7 +133,6 @@
                                                 </tfoot>
                                             </table>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -136,6 +141,8 @@
                 </section>
             </div>
         @endcan
+        {{--End Transaction Table --}}
+
 
     </div>
 </div>
