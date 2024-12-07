@@ -84,22 +84,11 @@ class ReportAppointmentController extends Controller
         if ($startDate && $endDate) {
             $query->whereBetween('date', [$startDate, $endDate]);
         }
-    
         // Eksekusi query
         $appointment = $query->get();
-    
-        // Logging untuk debugging
-        \Log::info('Appointment Query:', [
-            'type_user_id' => $type_user_condition,
-            'appointments_count' => $appointment->count(),
-            'appointments' => $appointment->toArray()
-        ]);
-    
+
         return view('pages.backsite.operational.appointment.index', compact('appointment'));
     }
-    
-    
-    
 
     /**
      * Show the form for creating a new resource.

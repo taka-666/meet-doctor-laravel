@@ -95,16 +95,19 @@ class ReportTransactionController extends Controller
             ]);
         }
 
-        // Mengambil nilai start_date dan end_date dari request
-        $startDate = $request->input('start_date');
-        $endDate = $request->input('end_date');
+        // Filter berdasarkan tanggal jika diberikan
+        $startDate = request('start_date');
+        $endDate = request('end_date');
 
-        // Jika start_date dan end_date diisi, tambahkan kondisi ke query
         if ($startDate && $endDate) {
-            $query->whereBetween('date', [$startDate, $endDate]);
+            $query->whereBetween('created_at', [$startDate, $endDate]);
+        } elseif ($startDate) {
+            $query->whereDate('created_at', '>=', $startDate);
+        } elseif ($endDate) {
+            $query->whereDate('created_at', '<=', $endDate);
         }
 
-        // Mengambil data appointment berdasarkan query
+        // Ambil data transaksi
         $transaction = $query->get();
 
         return view('pages.backsite.operational.transaction.index', compact('transaction'));
