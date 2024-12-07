@@ -47,38 +47,59 @@ class ReportAppointmentController extends Controller
     public function index(Request $request)
     {
         abort_if(Gate::denies('appointment_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $user_id = Auth::id();
-        $user_type = Auth::user()->detail_user->type_user_id;
-
-        if ($user_type == 1) {
-            // Jika pengguna adalah admin, maka dia bisa melihat semua janji temu
-            $appointment = Appointment::orderBy('created_at', 'desc')->get();
-        } elseif ($user_type == 2) {
-            // Jika pengguna adalah tipe 2, maka dia bisa melihat semua janji temu
-            $appointment = Appointment::orderBy('created_at', 'desc')->get();
-        } elseif ($user_type == 3) {
-            // Jika pengguna adalah tipe 3, maka dia hanya bisa melihat janji temunya sendiri
-            $appointment = Appointment::where('user_id', $user_id)->orderBy('created_at', 'desc')->get();
-        }
-
-        // Mengambil nilai start_date dan end_date dari request
-        $startDate = $request->input('start_date');
-        $endDate = $request->input('end_date');
-
+    
+        $type_user_condition = Auth::user()->detail_user->type_user_id;
+    
         // Membuat query untuk mengambil data appointment
         $query = Appointment::query();
-
-        // Jika start_date dan end_date diisi, tambahkan kondisi ke query
+    
+        if ($type_user_condition == 1) {
+            // Admin: melihat semua appointment
+            $query->orderBy('created_at', 'desc');
+        } elseif ($type_user_condition == 2) {
+            // Dokter: hanya melihat appointment yang ditujukan kepada dirinya
+            $doctorId = Doctor::where('id', Auth::id())->value('id'); // Ambil ID dokter berdasarkan user_id
+            if ($doctorId) {
+                $query->where('doctor_id', $doctorId)->orderBy('created_at', 'desc');
+            } else {
+                // Jika ID dokter tidak ditemukan, return collection kosong
+                return view('pages.backsite.operational.appointment.index', [
+                    'appointment' => collect() // Collection kosong
+                ]);
+            }
+        } elseif ($type_user_condition == 3) {
+            // Pasien: hanya melihat appointment mereka sendiri
+            $query->where('user_id', Auth::id())->orderBy('created_at', 'desc');
+        } else {
+            // Fallback untuk tipe user yang tidak dikenali
+            return view('pages.backsite.operational.appointment.index', [
+                'appointment' => collect() // Collection kosong
+            ]);
+        }
+    
+        // Filter berdasarkan rentang tanggal jika ada
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+    
         if ($startDate && $endDate) {
             $query->whereBetween('date', [$startDate, $endDate]);
         }
-
-        // Mengambil data appointment berdasarkan query
+    
+        // Eksekusi query
         $appointment = $query->get();
-
+    
+        // Logging untuk debugging
+        \Log::info('Appointment Query:', [
+            'type_user_id' => $type_user_condition,
+            'appointments_count' => $appointment->count(),
+            'appointments' => $appointment->toArray()
+        ]);
+    
         return view('pages.backsite.operational.appointment.index', compact('appointment'));
     }
+    
+    
+    
 
     /**
      * Show the form for creating a new resource.

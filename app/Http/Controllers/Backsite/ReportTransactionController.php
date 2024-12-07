@@ -53,26 +53,51 @@ class ReportTransactionController extends Controller
         abort_if(Gate::denies('transaction_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // You must add validation with conditions session id user by type user doctor & patient
-        $user_id = Auth::id();
-        $user_type = Auth::user()->detail_user->type_user_id;
+        $type_user = Auth::user()->detail_user->type_user_id;
 
-        if ($user_type == 1) {
-            // Jika pengguna adalah admin, maka dia bisa melihat semua janji temu
-            $transaction = Transaction::orderBy('created_at', 'desc')->get();
-        } elseif ($user_type == 2) {
-            // Jika pengguna adalah tipe 2, maka dia bisa melihat semua janji temu
-            $transaction = Transaction::orderBy('created_at', 'desc')->get();
-        } elseif ($user_type == 3) {
-            // Jika pengguna adalah tipe 3, maka dia hanya bisa melihat janji temunya sendiri
-            $transaction = Transaction::where('user_id', $user_id)->orderBy('created_at', 'desc')->get();
+        $query = Transaction::query();
+
+        if ($type_user == 1) {
+            // Admin: melihat semua transaksi
+            $query->orderBy('created_at', 'desc');
+        } elseif ($type_user == 2) {
+            // Dokter: melihat transaksi yang terkait dengan appointment kepada dirinya
+            $doctorId = Doctor::where('id', Auth::id())->value('id'); // Ambil ID dokter
+            if ($doctorId) {
+                // Filter transaksi berdasarkan appointment yang ditujukan kepada dokter ini
+                $query->whereHas('appointment', function ($query) use ($doctorId) {
+                    $query->where('doctor_id', $doctorId);
+                })->orderBy('created_at', 'desc');
+            } else {
+                // Jika ID dokter tidak ditemukan
+                return view('pages.backsite.operational.transaction.index', [
+                    'transaction' => collect() // Collection kosong
+                ]);
+            }
+        } elseif ($type_user == 3) {
+            // Pasien: melihat transaksi mereka sendiri
+            $user_id = User::where('id', Auth::id())->value('id'); // Ambil ID Pasien
+            if ($user_id) {
+                // Filter transaksi berdasarkan transaction yang ditujukan kepada pasien ini
+                $query->whereHas('appointment', function ($query) use ($user_id) {
+                    $query->where('user_id', $user_id);
+                })->orderBy('created_at', 'desc');
+            } else {
+                // Jika ID pasien tidak ditemukan
+                return view('pages.backsite.operational.transaction.index', [
+                    'transaction' => collect() // Collection kosong
+                ]);
+            }
+        } else {
+            // Fallback untuk tipe user yang tidak dikenali
+            return view('pages.backsite.operational.transaction.index', [
+                'transaction' => collect() // Collection kosong
+            ]);
         }
 
         // Mengambil nilai start_date dan end_date dari request
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
-
-        // Membuat query untuk mengambil data appointment
-        $query = Transaction::query();
 
         // Jika start_date dan end_date diisi, tambahkan kondisi ke query
         if ($startDate && $endDate) {

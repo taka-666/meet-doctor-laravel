@@ -345,17 +345,15 @@
                     </div>
 
                     <div class="mt-10 grid">
-
                         <input type="hidden" name="appointment_id" value="{{ $id ?? '' }}">
-
                         <!--
                         button when payment is filled.
                         -->
-                        <button type="submit" class="bg-[#0D63F3] text-white px-10 py-3 rounded-full text-center" x-show="payment.length" onclick="return confirm('Are you sure want to payment this appointment ?')">Pay Now</button>
+                        <button type="submit" class="bg-[#0D63F3] text-white px-10 py-3 rounded-full text-center" 
+                        x-show="payment.length" onclick="return confirm('Are you sure want to payment this appointment ?')">
+                        Pay Now</button>
 
-                        <!--
-                        button when payment is empty.
-                        -->
+                        <!--button when payment is empty.-->
                         <span
                             x-show="!payment.length"
                             class="bg-[#C0CADA] text-[#808997] cursor-not-allowed px-10 py-3 rounded-full text-center"

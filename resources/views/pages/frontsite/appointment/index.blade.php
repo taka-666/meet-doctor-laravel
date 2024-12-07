@@ -61,7 +61,7 @@
                     New Appointment
                 </h2>
 
-                <form action="{{ route('appointment.store') }}" method="POST" enctype="multipart/form-data" class="mt-8 space-y-5">
+                <form onsubmit="return validateForm()" action="{{ route('appointment.store') }}" method="POST" enctype="multipart/form-data" class="mt-8 space-y-5">
 
                     @csrf
 
@@ -69,10 +69,14 @@
                         <textarea 
                             name="consultation_topic" 
                             placeholder="Enter Your Topic Consultation"
-                            class="block w-full rounded-md text-[#1E2B4F] font-medium placeholder:text-[#AFAEC3] placeholder:font-normal px-4 border border-[#d4d4d4] focus:outline-none focus:border-[#0D63F3]"
+                            class="block w-full rounded-md text-[#1E2B4F] font-medium placeholder:text-[#AFAEC3] 
+                            placeholder:font-normal px-4 border border-[#d4d4d4] focus:outline-none 
+                            focus:border-[#0D63F3]"
                             rows="4" 
-                            required></textarea>
+                            required>
+                        </textarea>
                     </label>
+                    <div id="error-message" style="color: red;"></div>
 
                     <label class="relative block">
                         <input
@@ -187,4 +191,18 @@
             disableMobile: 'true',
         });
     </script>
+
+<script>
+    function validateForm() {
+        var textarea = document.getElementsByName("consultation_topic")[0];
+        var message = document.getElementById("error-message");
+
+        if (textarea.value.trim() === "") {
+            message.innerText = "Masukan Topic Konsultasi";
+            return false; // Prevent form submission
+        }
+
+        return true; // Allow form submission
+    }
+</script>
 @endpush
