@@ -16,12 +16,14 @@ class CreateTransactionTable extends Migration
         Schema::create('transaction', function (Blueprint $table) {
             $table->id();
             $table->foreignId('appointment_id')->nullable()->index('fk_transaction_to_appointment');
+            $table->string('transaction_code');
             $table->string('fee_doctor')->nullable();
             $table->string('fee_specialist')->nullable();
             $table->string('fee_hospital')->nullable();
             $table->string('sub_total')->nullable();
             $table->string('vat')->nullable();
             $table->string('total')->nullable();
+            $table->enum('status', [0,1,2]);
             $table->timestamps();
             $table->softDeletes();
         });

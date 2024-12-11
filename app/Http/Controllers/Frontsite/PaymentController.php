@@ -25,6 +25,10 @@ use App\Models\MasterData\Specialist;
 use App\Models\MasterData\ConfigPayment;
 
 // thirdparty package
+use Midtrans\Snap;
+use Midtrans\Config;
+use Midtrans\Notification;
+
 
 class PaymentController extends Controller
 {
@@ -37,7 +41,7 @@ class PaymentController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except('callback');
     }
     /**
      * Display a listing of the resource.
@@ -70,7 +74,7 @@ class PaymentController extends Controller
         $data = $request->all();
 
         // set random code for transaction code
-        // $data['transaction_code'] = Str::upper(Str::random(8).'-'.date('Ymd'));
+        $data['transaction_code'] = Str::upper(Str::random(8).'-'.date('Ymd'));
 
         $appointment = Appointment::where('id', $data['appointment_id'])->first();
         $config_payment = ConfigPayment::first();
@@ -91,7 +95,7 @@ class PaymentController extends Controller
         // save to database
         $transaction = new Transaction;
         $transaction->appointment_id = $appointment['id'];
-        // $transaction->transaction_code = $data['transaction_code'];
+        $transaction->transaction_code = $data['transaction_code'];
         $transaction->fee_doctor = $doctor_fee;
         $transaction->fee_specialist = $specialist_fee;
         $transaction->fee_hospital = $hospital_fee;
@@ -101,12 +105,42 @@ class PaymentController extends Controller
         $transaction->save();
 
 
-        // update status appointment
-        $appointment = Appointment::find($appointment->id);
-        $appointment->status = 1; // set to completed payment
-        $appointment->save();
+        // midtrans here
+        Config::$serverKey = config('services.midtrans.serverKey');
+        Config::$isProduction = config('services.midtrans.isProduction');
+        Config::$isSanitized = config('services.midtrans.isSanitized');
+        Config::$is3ds = config('services.midtrans.is3ds');
 
-        return redirect()->route('payment.success');
+        // Set all for midtrans here
+        $midtrans = [
+            'transaction_details' => [
+                'order_id' => $data['transaction_code'],
+                'gross_amount' => $grand_total,
+            ],
+            'customer_details' => [
+                'first_name' => Auth::user()->name,
+                'email' => Auth::user()->email,
+            ],
+            'enabled_payments' => [
+                'gopay', 'permata_va', 'bank_transfer'
+            ],
+            'vtweb' => []
+        ];
+
+        // redirect to website midtrans
+        try {
+            // Get Snap Payment Page URL
+            $paymentUrl = Snap::createTransaction($midtrans)->redirect_url;
+
+            // Redirect to Snap Payment Page
+            // header('Location: ' . $paymentUrl);
+            return redirect($paymentUrl);
+        }
+        catch (Exception $e) {
+            echo $e->getMessage();
+        }
+
+        // return redirect()->route('payment.success');
     }
 
     /**
@@ -154,7 +188,7 @@ class PaymentController extends Controller
         return abort(404);
     }
 
-    // custom controller
+    // Custom controller
     public function payment($id)
     {
         $appointment = Appointment::where('id', $id)->first();
@@ -178,4 +212,71 @@ class PaymentController extends Controller
     {
         return view('pages.frontsite.success.payment-success');
     }
+
+public function callback()
+{
+    try {
+        // Konfigurasi Midtrans
+        Config::$serverKey = config('services.midtrans.serverKey');
+        Config::$isProduction = config('services.midtrans.isProduction');
+        Config::$isSanitized = config('services.midtrans.isSanitized');
+        Config::$is3ds = config('services.midtrans.is3ds');
+
+        // Notifikasi dari Midtrans
+        $notification = new Notification();
+        \Log::info('Notification received', (array)$notification);
+
+        $status = $notification->transaction_status;
+        $order_id = $notification->order_id;
+
+        // Cari transaksi berdasarkan transaction_code
+        $transaction = Transaction::where('transaction_code', $order_id)->firstOrFail();
+        \Log::info('Transaction found', ['transaction' => $transaction]);
+
+        // Dapatkan appointment_id dari transaksi
+        $appointment_id = $transaction->appointment->id;
+
+        // Update status transaksi berdasarkan status dari Midtrans
+        switch ($status) {
+            case 'capture':
+            case 'settlement':
+                $transaction->status = 'SUCCESS';
+                $status_appointment = 1; // Status completed
+                break;
+
+            case 'pending':
+                $transaction->status = 'PENDING';
+                $status_appointment = 0; // Status pending
+                break;
+
+            case 'cancel':
+            case 'deny':
+            case 'expire':
+                $transaction->status = 'CANCELLED';
+                $status_appointment = 2; // Status cancelled
+                break;
+
+            default:
+                $transaction->status = 'UNKNOWN';
+                $status_appointment = 2; // Status unknown, default cancelled
+                break;
+        }
+
+        // Simpan perubahan transaksi
+        $transaction->save();
+        \Log::info('Transaction updated successfully', ['transaction' => $transaction]);
+
+        // Update status appointment
+        $appointment = Appointment::find($appointment_id);
+        $appointment->status = $status_appointment;
+        $appointment->save();
+        \Log::info('Appointment updated successfully', ['appointment' => $appointment]);
+
+        return response()->json(['status' => 'success']);
+    } catch (Exception $e) {
+        \Log::error('Callback error', ['message' => $e->getMessage()]);
+        return response()->json(['status' => 'error', 'message' => $e->getMessage()], 500);
+    }
+}
+
 }

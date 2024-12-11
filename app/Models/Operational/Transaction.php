@@ -22,6 +22,7 @@ class Transaction extends Model
 
     protected $fillable = [
         'appointment_id',
+        'transaction_code',
         'fee_hospital',
         'fee_doctor',
         'fee_specialist',

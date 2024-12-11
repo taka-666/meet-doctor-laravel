@@ -6,9 +6,7 @@
 
     <!-- Content -->
     <div class="min-h-screen">
-        <div
-            class="max-w-7xl grid lg:grid-cols-12 mx-auto pt-14 
-            lg:pt-20 pb-20 lg:pb-28 lg:divide-x px-4 lg:px-16">
+        <div class="max-w-7xl grid lg:grid-cols-12 mx-auto pt-14 lg:pt-20 pb-20 lg:pb-28 lg:divide-x px-4 lg:px-16">
 
             <!-- Detail Payment -->
             <div class="lg:col-span-7 lg:pl-8 lg:pr-20">
@@ -162,7 +160,8 @@
                                     height="19"
                                     viewBox="0 0 20 19"
                                     fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
                                     <path
                                     d="M9.04894 0.927052C9.3483 0.00574112 10.6517 0.00573993 10.9511 0.927051L12.4697 5.60081C12.6035 6.01284 12.9875 6.2918 13.4207 6.2918H18.335C19.3037 6.2918 19.7065 7.53141 18.9228 8.10081L14.947 10.9894C14.5966 11.244 14.4499 11.6954 14.5838 12.1074L16.1024 16.7812C16.4017 17.7025 15.3472 18.4686 14.5635 17.8992L10.5878 15.0106C10.2373 14.756 9.7627 14.756 9.41221 15.0106L5.43648 17.8992C4.65276 18.4686 3.59828 17.7025 3.89763 16.7812L5.41623 12.1074C5.55011 11.6954 5.40345 11.244 5.05296 10.9894L1.07722 8.10081C0.293507 7.53141 0.696283 6.2918 1.66501 6.2918H6.57929C7.01252 6.2918 7.39647 6.01284 7.53035 5.60081L9.04894 0.927052Z"
                                     fill="#FFB340"
@@ -177,23 +176,8 @@
                 <div class="mt-16">
                     <h5 class="text-[#1E2B4F] text-lg font-semibold">Appointment</h5>
                     <div class="flex items-center justify-between mt-5">
-                        <div class="text-[#AFAEC3] font-medium">Kebutuhan konsultasi</div>
+                        <div class="text-[#AFAEC3] font-medium">Kebutuhan Konsultasi</div>
                         <div class="text-[#1E2B4F] font-medium">{{ $appointment->consultation->name ?? '' }}</div>
-                    </div>
-
-                    <div class="flex items-center justify-between mt-5">
-                        <div class="text-[#AFAEC3] font-medium">Level</div>
-                        <div class="text-[#1E2B4F] font-medium">
-                            @if ($appointment->level == 1)
-                                {{ 'Low' }}
-                            @elseif ($appointment->level == 2)
-                                {{ 'Medium' }}
-                            @elseif ($appointment->level == 3)
-                                {{ 'High' }}
-                            @else
-                                {{ 'N/A' }}
-                            @endif
-                        </div>
                     </div>
 
                     <div class="flex items-center justify-between mt-5">
@@ -252,7 +236,6 @@
                     </div>
                 </div>
             </div>
-            {{-- End Detail Payment --}}
 
             <!-- Choose Payment -->
             <div class="lg:col-span-5 lg:pl-20 lg:pr-7 mt-10 lg:mt-0">
@@ -345,15 +328,19 @@
                     </div>
 
                     <div class="mt-10 grid">
+
                         <input type="hidden" name="appointment_id" value="{{ $id ?? '' }}">
+
                         <!--
                         button when payment is filled.
                         -->
                         <button type="submit" class="bg-[#0D63F3] text-white px-10 py-3 rounded-full text-center" 
-                        x-show="payment.length" onclick="return confirm('Are you sure want to payment this appointment ?')">
-                        Pay Now</button>
+                        x-show="payment.length" onclick="return confirm('Are you sure want to payment this appointment ?')"
+                        >Pay Now</button>
 
-                        <!--button when payment is empty.-->
+                        <!--
+                        button when payment is empty.
+                        -->
                         <span
                             x-show="!payment.length"
                             class="bg-[#C0CADA] text-[#808997] cursor-not-allowed px-10 py-3 rounded-full text-center"
@@ -363,10 +350,41 @@
                     </div>
                 </form>
             </div>
-            <!-- End Choose Payment -->
 
         </div>
     </div>
-        <!-- End Content -->
+
+    {{-- <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
+
+    <script type="text/javascript">
+        document.getElementById('pay-button').onclick = function() {
+            snap.pay('{{ $snapToken }}', {
+                onSuccess: function(result) {
+                    alert("Payment Success!");
+                    window.location.href = "{{ route('payment.success') }}";
+                },
+                onPending: function(result) {
+                    alert("Waiting for payment confirmation!");
+                    window.location.href = "{{ route('payment.success') }}";
+                },
+                onError: function(result) {
+                    alert("Payment failed!");
+                    window.location.href = "{{ route('payment.success') }}";
+                }
+            });
+        };
+    </script>
+
+@push('scripts')
+<!-- Include Snap.js -->
+<script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" 
+data-client-key="{{ config('services.midtrans.client_key') }}"></script>
+
+<script>
+    function payWithSnap(token) {
+        window.snap.pay(token); // Trigger Snap to open payment modal
+    }
+</script>
+@endpush --}}
 
 @endsection

@@ -185,6 +185,7 @@ class ReportTransactionController extends Controller
         return abort(404);
     }
 
+    // Custom Controller
     public function export($id) 
     {
         abort_if(Gate::denies('transaction_export'), Response::HTTP_FORBIDDEN, '403 Forbidden');
