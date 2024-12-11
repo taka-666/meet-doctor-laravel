@@ -1,16 +1,14 @@
 {
 "phases": {
-    "setup": {
+    "install": {
     "commands": [
-        "mkdir -p /var/log/nginx && mkdir -p /var/cache/nginx",
-        "composer install --ignore-platform-reqs --optimize-autoloader --no-dev",
-        "npm install"
+        "composer install --ignore-platform-reqs --optimize-autoloader",
+        "npm ci"
     ]
     },
     "build": {
     "commands": [
         "npm run prod",
-        "php artisan key:generate",
         "php artisan config:cache",
         "php artisan route:cache",
         "php artisan storage:link"
@@ -18,11 +16,12 @@
     }
 },
 "pkgs": [
-    "php80",
-    "php80.withExtensions (pe: pe.enabled ++ [\"pdo_mysql\"])",
-    "libmysqlclient",
-    "php80Packages.composer",
+    "php81",
+    "php81Extensions.pdo_mysql",
+    "php81Extensions.fileinfo",
+    "php81Extensions.mbstring",
+    "php81Extensions.openssl",
     "nodejs_18",
-    "npm-9_x"
-]
+    "composer"
+    ]
 }
