@@ -1,6 +1,7 @@
 {
     "private": true,
     "scripts": {
+        "start": "command to run your app",
         "dev": "npm run development",
         "development": "mix",
         "watch": "mix watch",
