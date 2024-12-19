@@ -258,7 +258,9 @@
                                 class="sr-only peer"/>
 
                             <label
-                                class="flex flex-col justify-center items-center bg-white border-[#EDEDED] cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-[#0D63F3] peer-checked:ring-2 peer-checked:border-transparent rounded-3xl border-2 p-7"
+                                class="flex flex-col justify-center items-center bg-white border-[#EDEDED] 
+                                cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-[#0D63F3] 
+                                peer-checked:ring-2 peer-checked:border-transparent rounded-3xl border-2 p-7"
                                 for="master-card">
                                 <img
                                 src="{{ asset('/assets/frontsite/images/master-card.png') }}"
@@ -277,7 +279,9 @@
                                 id="visa"
                                 class="sr-only peer"/>
                             <label
-                                class="flex flex-col justify-center items-center bg-white border-[#EDEDED] cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-[#0D63F3] peer-checked:ring-2 peer-checked:border-transparent rounded-3xl border-2 p-7"
+                                class="flex flex-col justify-center items-center bg-white border-[#EDEDED] 
+                                cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-[#0D63F3] 
+                                peer-checked:ring-2 peer-checked:border-transparent rounded-3xl border-2 p-7"
                                 for="visa">
                                 <img
                                 src="{{ asset('/assets/frontsite/images/visa.png') }}"
@@ -296,7 +300,9 @@
                                 id="cirrus"
                                 class="sr-only peer"/>
                             <label
-                                class="flex flex-col justify-center items-center bg-white border-[#EDEDED] cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-[#0D63F3] peer-checked:ring-2 peer-checked:border-transparent rounded-3xl border-2 p-7"
+                                class="flex flex-col justify-center items-center bg-white border-[#EDEDED] 
+                                cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-[#0D63F3] 
+                                peer-checked:ring-2 peer-checked:border-transparent rounded-3xl border-2 p-7"
                                 for="cirrus">
                                 <img
                                 src="{{ asset('/assets/frontsite/images/cirrus.png') }}"
@@ -353,7 +359,8 @@
 
         </div>
     </div>
-
+    @endsection
+    
     {{-- <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
 
     <script type="text/javascript">
@@ -387,4 +394,3 @@ data-client-key="{{ config('services.midtrans.client_key') }}"></script>
 </script>
 @endpush --}}
 
-@endsection

@@ -124,7 +124,11 @@ class PaymentController extends Controller
             'enabled_payments' => [
                 'gopay', 'permata_va', 'bank_transfer'
             ],
-            'vtweb' => []
+            'vtweb' => [],
+            'callbacks' => [
+                'finish' => route('payment.success'),
+            ],
+            
         ];
 
         // redirect to website midtrans
@@ -208,75 +212,68 @@ class PaymentController extends Controller
         return view('pages.frontsite.payment.index', compact('appointment', 'config_payment', 'total_with_vat', 'grand_total', 'id'));
     }
 
-    public function success()
-    {
-        return view('pages.frontsite.success.payment-success');
-    }
-
-public function callback()
+    public function callback(Request $request)
 {
+    // Konfigurasi Midtrans
+    Config::$serverKey = config('services.midtrans.serverKey');
+    Config::$isProduction = config('services.midtrans.isProduction');
+    Config::$isSanitized = config('services.midtrans.isSanitized');
+    Config::$is3ds = config('services.midtrans.is3ds');
+
     try {
-        // Konfigurasi Midtrans
-        Config::$serverKey = config('services.midtrans.serverKey');
-        Config::$isProduction = config('services.midtrans.isProduction');
-        Config::$isSanitized = config('services.midtrans.isSanitized');
-        Config::$is3ds = config('services.midtrans.is3ds');
-
-        // Notifikasi dari Midtrans
+        // Inisialisasi $notification
         $notification = new Notification();
-        \Log::info('Notification received', (array)$notification);
 
-        $status = $notification->transaction_status;
-        $order_id = $notification->order_id;
+        // Validasi Signature Key
+        $serverKey = config('services.midtrans.serverKey');
+        $calculatedSignatureKey = hash('sha512', $notification->order_id . $notification->status_code . $notification->gross_amount . $serverKey);
+
+        if ($calculatedSignatureKey !== $notification->signature_key) {
+            return response()->json(['message' => 'Invalid signature key'], 403);
+        }
 
         // Cari transaksi berdasarkan transaction_code
-        $transaction = Transaction::where('transaction_code', $order_id)->firstOrFail();
-        \Log::info('Transaction found', ['transaction' => $transaction]);
+        $transaction = Transaction::where('transaction_code', $notification->order_id)->firstOrFail();
+        $appointment = $transaction->appointment;
 
-        // Dapatkan appointment_id dari transaksi
-        $appointment_id = $transaction->appointment->id;
-
-        // Update status transaksi berdasarkan status dari Midtrans
-        switch ($status) {
+        // Proses status transaksi
+        switch ($notification->transaction_status) {
             case 'capture':
+                $transaction->status = 'SUCCESS';
+                $appointment->status = 1; // Pembayaran sukses
+                break;
+
             case 'settlement':
                 $transaction->status = 'SUCCESS';
-                $status_appointment = 1; // Status completed
+                $appointment->status = 1; // Pembayaran sukses
                 break;
 
             case 'pending':
                 $transaction->status = 'PENDING';
-                $status_appointment = 0; // Status pending
+                $appointment->status = 0; // Menunggu pembayaran
                 break;
 
-            case 'cancel':
             case 'deny':
             case 'expire':
-                $transaction->status = 'CANCELLED';
-                $status_appointment = 2; // Status cancelled
-                break;
-
-            default:
-                $transaction->status = 'UNKNOWN';
-                $status_appointment = 2; // Status unknown, default cancelled
+            case 'cancel':
+                $transaction->status = 'FAILED';
+                $appointment->status = 2; // Pembayaran gagal
                 break;
         }
 
-        // Simpan perubahan transaksi
+        // Simpan perubahan
         $transaction->save();
-        \Log::info('Transaction updated successfully', ['transaction' => $transaction]);
-
-        // Update status appointment
-        $appointment = Appointment::find($appointment_id);
-        $appointment->status = $status_appointment;
         $appointment->save();
-        \Log::info('Appointment updated successfully', ['appointment' => $appointment]);
 
-        return response()->json(['status' => 'success']);
-    } catch (Exception $e) {
-        \Log::error('Callback error', ['message' => $e->getMessage()]);
-        return response()->json(['status' => 'error', 'message' => $e->getMessage()], 500);
+        return response()->json(['message' => 'Callback processed successfully'], 200);
+    } catch (\Exception $e) {
+        return response()->json(['message' => 'Error processing callback', 'error' => $e->getMessage()], 500);
     }
 }
+
+    public function success()
+    {
+        return view('pages.frontsite.success.payment-success');
+    }
 
 }

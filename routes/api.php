@@ -16,7 +16,7 @@ use App\Http\Controllers\Api\LandingApiController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('/', [LandingApiController::class, 'index']);
+Route::resource('/', LandingApiController::class);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

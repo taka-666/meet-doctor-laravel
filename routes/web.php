@@ -47,9 +47,9 @@ Route::resource('/', LandingController::class);
 
 // Frontsite
 // Route::post('payment/callback', 'callback')->name('payment.callback');
-Route::post('payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');
-Route::get('payment/success', [PaymentController::class, 'success'])->name('payment.success');
 
+Route::post('payment/callback', [PaymentController::class,'callback'])->name('payment.callback');
+Route::get('payment/success', [PaymentController::class, 'success'])->name('payment.success');
 Route::group(['middleware' => ['web', 'verified']],function (){ 
         // Appointment page
         Route::get('appointment/doctor/{id}', [AppointmentController::class, 'appointment'])->name('appointment.doctor');
@@ -57,9 +57,13 @@ Route::group(['middleware' => ['web', 'verified']],function (){
 
         // Payment page
         Route::controller(PaymentController::class)->group(function() {
+            // Route::post('payment/callback', 'callback')->name('payment.callback');
+            // Route::get('payment/success', 'success')->name('payment.success');
             Route::get('payment/appointment/{id}', 'payment')->name('payment.appointment');
         });
         Route::resource('payment', PaymentController::class);
+
+
 
         Route::resource('register_success', RegisterController::class);
 });

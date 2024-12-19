@@ -31,23 +31,21 @@ class LandingApiController extends Controller
     public function index()
     {
         try {
-            // $specialists = Specialist::inRandomOrder()->limit(5)->get();
-            $doctors = Doctor::orderBy('created_at', 'desc')->limit(4)->get()->map(function ($doctor) {
+            $specialist = Specialist::inRandomOrder()->limit(5)->get();
+            $doctor = Doctor::orderBy('created_at', 'desc')->limit(4)->get()->map(function ($doctor) {
                 return [
                     'id' => $doctor->id,
                     'name' => $doctor->name,
                     'image' => url(Storage::url($doctor->photo)),
-                    'specialist' => [
-                        'name' => $doctor->specialist->name ?? '',
-                    ],
+                    'specialists' => $doctor->specialist->name ?? null,
                 ];
             });
 
             return response()->json([
                 'status' => true,
                 'message' => 'Success',
-                // 'specialists' => $specialists,
-                'doctors' => $doctors
+                // 'specialist' => $specialist,
+                'doctor' => $doctor,
             ], Response::HTTP_OK);
 
         } catch (\Exception $e) {

@@ -23,7 +23,7 @@ class CreateTransactionTable extends Migration
             $table->string('sub_total')->nullable();
             $table->string('vat')->nullable();
             $table->string('total')->nullable();
-            $table->enum('status', [0,1,2]);
+            $table->enum('status', ['SUCCESS', 'PENDING','CANCELLED', 'UNKNOWN']);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -61,7 +61,8 @@
                     New Appointment
                 </h2>
 
-                <form onsubmit="return validateForm()" action="{{ route('appointment.store') }}" method="POST" enctype="multipart/form-data" class="mt-8 space-y-5">
+                <form onsubmit="return validateForm()" action="{{ route('appointment.store') }}" 
+                method="POST" enctype="multipart/form-data" class="mt-8 space-y-5">
 
                     @csrf
 
@@ -126,7 +127,8 @@
                             type="text"
                             id="time"
                             name="time"
-                            class="block w-full rounded-full py-4 text-[#1E2B4F] font-medium placeholder:text-[#AFAEC3] placeholder:font-normal px-7 border border-[#d4d4d4] focus:outline-none focus:border-[#0D63F3]"
+                            class="block w-full rounded-full py-4 text-[#1E2B4F] fo
+                            nt-medium placeholder:text-[#AFAEC3] placeholder:font-normal px-7 border border-[#d4d4d4] focus:outline-none focus:border-[#0D63F3]"
                             placeholder="Choose Time" required/>
                         <span
                             class="absolute top-0 right-[11px] bottom-1/2 translate-y-[58%]">
@@ -155,7 +157,8 @@
                     <input type="hidden" name="doctor_id" value="{{ $doctor->id ?? '' }}">
 
                     <div class="grid">
-                        <button type="submit" class="bg-[#0D63F3] rounded-full mt-5 text-white text-lg font-medium px-10 py-3 text-center" onclick="return confirm('Are you sure want to confirm this appointment ?')">Continue</button>
+                        <button type="submit" class="bg-[#0D63F3] rounded-full mt-5 text-white text-lg 
+                        font-medium px-10 py-3 text-center" onclick="return confirm('Are you sure want to confirm this appointment ?')">Continue</button>
                     </div>
                 </form>
             </div>

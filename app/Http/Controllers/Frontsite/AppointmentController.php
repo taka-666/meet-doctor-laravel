@@ -81,6 +81,7 @@ class AppointmentController extends Controller
         $appointment->status = 2; // set to waiting payment
         $appointment->save();
 
+        // redirect to payment page yang menggunakan PaymentController
         return redirect()->route('payment.appointment', $appointment->id);
     }
 

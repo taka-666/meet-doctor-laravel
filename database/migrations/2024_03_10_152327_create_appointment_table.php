@@ -20,7 +20,7 @@ class CreateAppointmentTable extends Migration
             $table->foreignId('consultation_id')->nullable()->index('fk_appointment_to_consultation');
             $table->date('date')->nullable();
             $table->time('time')->nullable();
-            $table->enum('status', [1,2]); // ini adalah status appointment mengacu kepada user tersebut datang atau tidak
+            $table->enum('status', [1,2]); // ini adalah status appointment mengacu kepada user tersebut bayar atau tidak
             $table->timestamps();
             $table->softDeletes();
         });
