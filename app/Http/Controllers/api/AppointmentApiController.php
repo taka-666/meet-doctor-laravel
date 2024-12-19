@@ -108,4 +108,28 @@ class AppointmentApiController extends Controller
 
         return response()->json(['success' => true, 'message' => 'Appointment deleted successfully'], 200);
     }
+
+    public function appointment($doctorId)
+{
+    try {
+        $doctor = Doctor::findOrFail($doctorId);
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'doctor_id' => $doctor->id,
+                'doctor_name' => $doctor->name,
+                'specialist' => $doctor->specialist->name ?? null,
+            ],
+        ], Response::HTTP_OK);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Doctor not found',
+            'error' => $e->getMessage()
+        ], Response::HTTP_NOT_FOUND);
+    }
+}
+
 }

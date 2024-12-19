@@ -48,6 +48,10 @@ class User extends Authenticatable
         'two_factor_secret',
     ];
 
+    // $user = User::find(1);
+    // $token = $user->createToken('API Token')->plainTextToken;
+
+
     /**
      * The attributes that should be cast.
      *
